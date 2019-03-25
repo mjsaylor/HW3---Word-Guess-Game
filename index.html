@@ -15,7 +15,7 @@
         //computer chooses random show
         var computerChoices = ["Anything Goes", "Miss Saigon", "Rent", "Sweeney Todd", "Spring Awakening", "Phantom of the Opera", "Something Rotten", "Jersey Boys", "The Band's Visit", "Guys and Dolls"]
         var computer = computerChoices[Math.floor(Math.random() * computerChoices.length)]
-
+        var answerArray = [];
 
         //blanks appear on screen for letters
 
@@ -26,14 +26,12 @@
             var player = event.key;
             console.log("Player Guessed", player)
 
-            var correctGuesses = [];
-
             for (var i = 0; i < computer.length; i++) {
-                correctGuesses.push(i);
-                console.log(computer.charAt(i));
+                answerArray[i] = "_";
+                console.log(answerArray);
             }
 
-            if (player === correctGuesses) {
+            if (player === (computer.charAt(i))) {
                 console.log("correct guess")
             } else { console.log("wrong guess") }
 
