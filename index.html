@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+</head>
+
+<body>
+    <div id="Computer Choice">
+
+    </div>
+    <script>
+
+        //computer chooses random show
+        var computerChoices = ["Anything Goes", "Miss Saigon", "Rent", "Sweeney Todd", "Spring Awakening", "Phantom of the Opera", "Something Rotten", "Jersey Boys", "The Band's Visit", "Guys and Dolls"]
+        var computer = computerChoices[Math.floor(Math.random() * computerChoices.length)]
+
+
+        //blanks appear on screen for letters
+
+        //player presses button, guesses letter
+        document.onkeyup = function (event) {
+
+            console.log("Computer chooses", computer)
+            var player = event.key;
+            console.log("Player Guessed", player)
+
+            var correctGuesses = [];
+
+            for (var i = 0; i < computer.length; i++) {
+                correctGuesses.push(i);
+                console.log(computer.charAt(i));
+            }
+
+            if (player === correctGuesses) {
+                console.log("correct guess")
+            } else { console.log("wrong guess") }
+
+
+        };
+
+        var gameDiv = document.getElementById("Computer Choice");
+        var n = computer.length
+        console.log(n)
+        gameDiv.textContent = "Computer Choice" + computer
+
+
+
+
+
+ //computer chooses random word
+ //player presses button, guesses letter
+ //letter appears in "letters guessed"
+ //if guess is correct, letter appears in blanks
+ //when word is complete, player wins
+ //computer selects new word
+
+
+    </script>
+
+</body>
+
+</html>
