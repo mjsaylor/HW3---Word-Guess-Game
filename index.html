@@ -7,41 +7,62 @@
 </head>
 
 <body>
-    <div id="Computer Choice">
-
-    </div>
+    <h1 id="ComputerChoice"></h1>
+    <div id="hangman"></div>
     <script>
 
         //computer chooses random show
         var computerChoices = ["Anything Goes", "Miss Saigon", "Rent", "Sweeney Todd", "Spring Awakening", "Phantom of the Opera", "Something Rotten", "Jersey Boys", "The Band's Visit", "Guys and Dolls"]
-        var computer = computerChoices[Math.floor(Math.random() * computerChoices.length)]
-        var answerArray = [];
+        var computerSelection = computerChoices[Math.floor(Math.random() * computerChoices.length)]
+        // number of guesses
+        var lettersGuessed = [];
+        var selectionBlanks = [];
+        for (var i = 0; i < computerSelection.length; i++) {
+            selectionBlanks.push("_");
+        }
+        console.log(selectionBlanks);
+        // number of incorrect guesses
+        // which letters have been guessed
+        // correctly guessed letters
+        // is game over
+        // did player win?
 
-        //blanks appear on screen for letters
-
+        // blanks appear on screen for letters
+        function fillInTheBlanks(guess) {
+            for (var i = 0; i < selectionBlanks.length; i++) {
+                if (guess == computerSelection[i].toLowerCase()) {
+                    selectionBlanks[i] = computerSelection[i];
+                }
+            }
+        }
         //player presses button, guesses letter
         document.onkeyup = function (event) {
 
-            console.log("Computer chooses", computer)
-            var player = event.key;
-            console.log("Player Guessed", player)
+            console.log("Computer chooses", computerSelection)
+            var playerGuess = event.key;
+            console.log("Player Guessed", playerGuess)
+            // check the guess
 
-            for (var i = 0; i < computer.length; i++) {
-                answerArray[i] = "_";
-                console.log(answerArray);
+            if (computerSelection.toLowerCase().includes(playerGuess)) {
+
+                //replace blank in selectionBlanks array with playerGuess
+                fillInTheBlanks(playerGuess)
+
+            } else {
+                console.log("Wrong Guess!")
             }
-
-            if (player === (computer.charAt(i))) {
-                console.log("correct guess")
-            } else { console.log("wrong guess") }
-
-
+            lettersGuessed.push(playerGuess);
+            console.log(lettersGuessed);
+            console.log(selectionBlanks.join(""));
+            gameDiv.textContent = selectionBlanks.join("");
         };
 
-        var gameDiv = document.getElementById("Computer Choice");
-        var n = computer.length
-        console.log(n)
-        gameDiv.textContent = "Computer Choice" + computer
+        var gameTitle = document.getElementById("ComputerChoice");
+        var gameDiv = document.getElementById("hangman");
+
+        gameDiv.textContent = selectionBlanks.join("");
+
+        gameTitle.textContent = "Computer Choice: " + computerSelection
 
 
 
@@ -51,7 +72,8 @@
  //player presses button, guesses letter
  //letter appears in "letters guessed"
  //if guess is correct, letter appears in blanks
- //when word is complete, player wins
+ //when word is complete
+ //player wins
  //computer selects new word
 
 
