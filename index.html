@@ -4,96 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman</title>
+    
 </head>
 
 <body>
     <h1 id="ComputerChoice"></h1>
     <div id="hangman"></div>
     <div id="letters-Guessed"></div>
-    <script>
-
-        //computer chooses random Broadway show
-        var computerChoices = ["Urinetown", "Wicked", "Once On This Island", "Aladdin", "Hair", "The Sound of Music", "Grease", "The Lion King", "Thoroughly Modern Millie", "Mamma Mia", "The Music Man", "Dreamgirls", "Fiddler on the Roof", "Ragtime", "Les Miserables", "Avenue Q", "A Chorus Line", "My Fair Lady", "The Producers", "Hairspray", "Oklahoma!", "Aida", "School of Rock", "Matilda", "Anything Goes", "Cabaret", "Annie", "The Book of Mormon", "Hamilton", "Big River", "Little Shop of Horrors", "Jesus Christ Superstar", "Into the Woods", "In the Heights", "Evita", "Miss Saigon", "Rent", "Sweeney Todd", "Spring Awakening", "Phantom of the Opera", "Something Rotten", "Jersey Boys", "The Band's Visit", "Guys and Dolls"]
-        var computerSelection = computerChoices[Math.floor(Math.random() * computerChoices.length)]
-        // number of guesses
-        var lettersGuessed = {};
-        var selectionBlanks = [];
-        // found "regular expression" aka regex to create blanks only for letters, since some shows have spaces and punctuation
-        var regex = /[A-Za-z]/;
-        for (var i = 0; i < computerSelection.length; i++) {
-            if (computerSelection[i].search(regex) > -1) {
-                selectionBlanks.push("_ ");
-            }
-            else {
-                selectionBlanks.push(computerSelection[i])
-            }
-        }
-        console.log(selectionBlanks);
-        // number of incorrect guesses
-        // which letters have been guessed
-        // correctly guessed letters
-        // is game over
-        // did player win?
-
-        // blanks appear on screen for letters
-        function fillInTheBlanks(guess) {
-            for (var i = 0; i < selectionBlanks.length; i++) {
-                if (guess == computerSelection[i].toLowerCase()) {
-                    selectionBlanks[i] = computerSelection[i];
-                }
-            }
-        }
-
-        // function showLettersGuessed() {
-        // }
-        //player presses button, guesses letter
-        document.onkeyup = function (event) {
-
-            console.log("Computer chooses", computerSelection)
-            var playerGuess = event.key;
-            console.log("Player Guessed", playerGuess)
-
-            // check the guess
-            if (computerSelection.toLowerCase().includes(playerGuess)) {
-
-                //replace blank in selectionBlanks array with playerGuess
-                fillInTheBlanks(playerGuess)
-
-            } else {
-                console.log("Wrong Guess!")
-            }
-            //add all letters guessed to lettersGuessed
-            lettersGuessed[playerGuess] = true;
-                console.log(lettersGuessed);
-                console.log(selectionBlanks.join(""));
-            //display game as text    
-            gameDiv.textContent = selectionBlanks.join("");
-            gameDiv2.textContent = "Letters Guessed so far: " + Object.keys(lettersGuessed);
-            //don't allow guesses to be guessed twice; in an object, all keys must be unique
-        };
-        //defining text elements via HTML
-        var gameTitle = document.getElementById("ComputerChoice");
-        var gameDiv = document.getElementById("hangman");
-        var gameDiv2 = document.getElementById("letters-Guessed")
-
-        gameDiv.textContent = selectionBlanks.join("");
-
-
-
-        gameTitle.textContent = "Computer Choice: ???"
-
-
-
-
-
- 
- //when word is complete
- //player wins
- //computer selects new word
-
-
-    </script>
-
+    
+    <script src="assets/javascript/game.js"></script>
 </body>
 
 </html>
