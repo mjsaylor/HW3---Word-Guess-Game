@@ -1,3 +1,7 @@
+
+var gameTitle = document.getElementById("ComputerChoice");
+var gameDiv = document.getElementById("hangman");
+var gameDiv2 = document.getElementById("letters-Guessed");
 //computer chooses random Broadway show
 var computerChoices = ["Urinetown", "Wicked", "Once On This Island", "Aladdin", "Hair", "The Sound of Music", "Grease", "The Lion King", "Thoroughly Modern Millie", "Mamma Mia", "The Music Man", "Dreamgirls", "Fiddler on the Roof", "Ragtime", "Les Miserables", "Avenue Q", "A Chorus Line", "My Fair Lady", "The Producers", "Hairspray", "Oklahoma!", "Aida", "School of Rock", "Matilda", "Anything Goes", "Cabaret", "Annie", "The Book of Mormon", "Hamilton", "Big River", "Little Shop of Horrors", "Jesus Christ Superstar", "Into the Woods", "In the Heights", "Evita", "Miss Saigon", "Rent", "Sweeney Todd", "Spring Awakening", "Phantom of the Opera", "Something Rotten", "Jersey Boys", "The Band's Visit", "Guys and Dolls"]
 var computerSelection = computerChoices[Math.floor(Math.random() * computerChoices.length)]
@@ -9,16 +13,28 @@ var wrongGuesses = 0;
 var selectionBlanks = [];
 //identify letters because I included shows that have spaces and punctuation
 var regex = /[A-Za-z]/;
-//search the computer selection for letters; replace those regular characters with "_"
-for (var i = 0; i < computerSelection.length; i++) {
-    if (computerSelection[i].search(regex) > -1) {
-        selectionBlanks.push("_ ");
-    }
-    //if not a letter, keep original character from selection
-    else {
-        selectionBlanks.push(computerSelection[i])
+
+
+
+function gameSetUp() {
+    //search the computer selection for letters; replace those regular characters with "_"
+
+    for (var i = 0; i < computerSelection.length; i++) {
+        if (computerSelection[i].search(regex) > -1) {
+            selectionBlanks.push("_ ");
+        }
+        //if not a letter, keep original character from selection
+        else {
+            selectionBlanks.push(computerSelection[i])
+        }
     }
 }
+
+
+gameSetUp();
+
+
+
 console.log("Computer chooses", computerSelection)
 console.log(selectionBlanks);
 
@@ -30,6 +46,14 @@ function fillInTheBlanks(guess) {
         }
     }
 }
+
+function renderGame() {
+    //display game as text    
+    gameDiv2.textContent = "Letters Guessed so far: " + Object.keys(lettersGuessed) + " Wrong Guesses: " + wrongGuesses;
+    gameTitle.textContent = "Computer Choice: ???";
+    gameDiv.textContent = selectionBlanks.join("");
+}
+
 
 //player presses button, guesses letter
 document.onkeyup = function (event) {
@@ -54,32 +78,23 @@ document.onkeyup = function (event) {
     lettersGuessed[playerGuess] = true;
     console.log(lettersGuessed);
 
+    console.log(selectionBlanks.join(""));
+
+
+
     if (wrongGuesses > 7) {
-        console.log("restart")
-
-    }    
-    // console.log(selectionBlanks.join(""));
-
-
+        gameSetUp();
+    }
     
 
-    //display game as text    
-    gameDiv.textContent = selectionBlanks.join("");
-    gameDiv2.textContent = "Letters Guessed so far: " + Object.keys(lettersGuessed) + " Wrong Guesses: " + wrongGuesses;
-    //don't allow guesses to be guessed twice; in an object, all keys must be unique
-
-
 };
-//defining text elements via HTML
-var gameTitle = document.getElementById("ComputerChoice");
-var gameDiv = document.getElementById("hangman");
-var gameDiv2 = document.getElementById("letters-Guessed");
-
-gameDiv.textContent = selectionBlanks.join("");
 
 
 
-gameTitle.textContent = "Computer Choice: ???";
+
+
+
+
 
 
 
