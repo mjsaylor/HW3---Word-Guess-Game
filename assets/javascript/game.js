@@ -7,12 +7,14 @@ var lettersGuessed = {};
 var wrongGuesses = 0;
 // computer's choice written in blanks
 var selectionBlanks = [];
-// found "regular expression" aka regex to create blanks only for letters, since some shows have spaces and punctuation
+//identify letters because I included shows that have spaces and punctuation
 var regex = /[A-Za-z]/;
+//search the computer selection for letters; replace those regular characters with "_"
 for (var i = 0; i < computerSelection.length; i++) {
     if (computerSelection[i].search(regex) > -1) {
         selectionBlanks.push("_ ");
     }
+    //if not a letter, keep original character from selection
     else {
         selectionBlanks.push(computerSelection[i])
     }
@@ -34,34 +36,39 @@ document.onkeyup = function (event) {
 
     var playerGuess = event.key;
     console.log("Player Guessed", playerGuess)
+    //check if letter has already been guessed
+    if (lettersGuessed[playerGuess]) {
+        console.log("You already guessed " + playerGuess)
+        return
+    }
 
-    // check the guess; is it correct?
-    if (computerSelection.toLowerCase().includes(playerGuess)) {
-
-        //replace blank in selectionBlanks array with correct playerGuess
+    // if guess is unique, check the guess. Is it correct?
+    else if (computerSelection.toLowerCase().includes(playerGuess)) {
+        //if correct, replace blank in selectionBlanks array with correct playerGuess
         fillInTheBlanks(playerGuess)
-
     } else {
         console.log("Wrong Guess!")
-        wrongGuesses++;
+        wrongGuesses++
     }
     //add all letters guessed to lettersGuessed
     lettersGuessed[playerGuess] = true;
     console.log(lettersGuessed);
-    console.log(selectionBlanks.join(""));
 
-    if (wrongGuesses > 9) {
-        console.log("GAME OVER")
-    }
+    if (wrongGuesses > 7) {
+        console.log("restart")
 
-    //if player has already guessed letter, display "you already guessed that"
+    }    
+    // console.log(selectionBlanks.join(""));
+
+
+    
 
     //display game as text    
     gameDiv.textContent = selectionBlanks.join("");
-    gameDiv2.textContent = "Letters Guessed so far: " + Object.keys(lettersGuessed) + wrongGuesses;
+    gameDiv2.textContent = "Letters Guessed so far: " + Object.keys(lettersGuessed) + " Wrong Guesses: " + wrongGuesses;
     //don't allow guesses to be guessed twice; in an object, all keys must be unique
 
-    
+
 };
 //defining text elements via HTML
 var gameTitle = document.getElementById("ComputerChoice");
