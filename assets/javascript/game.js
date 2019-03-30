@@ -1,24 +1,22 @@
-
-var gameTitle = document.getElementById("ComputerChoice");
+//setup html variables
 var gameDiv = document.getElementById("blanks");
 var gameDiv2 = document.getElementById("letters-Guessed");
 var gameDiv3 = document.getElementById("wrong-guesses")
-var gameDiv4 = document.getElementById("how-to-play")
 var gameOverDiv = document.getElementById("game-over");
-//computer chooses random Broadway show
+//song variables
+var songWin = document.getElementById("myAudio1");
+var songLose = document.getElementById("myAudio2");
+// global variables for gameplay
 var computerChoices = ["Urinetown", "Wicked", "Once On This Island", "Aladdin", "Hair", "The Sound of Music", "Grease", "The Lion King", "Thoroughly Modern Millie", "Mamma Mia", "The Music Man", "Dreamgirls", "Fiddler on the Roof", "Ragtime", "Les Miserables", "Avenue Q", "A Chorus Line", "My Fair Lady", "The Producers", "Hairspray", "Oklahoma!", "Aida", "School of Rock", "Matilda", "Anything Goes", "Cabaret", "Annie", "The Book of Mormon", "Hamilton", "Big River", "Little Shop of Horrors", "Jesus Christ Superstar", "Into the Woods", "In the Heights", "Evita", "Miss Saigon", "Rent", "Sweeney Todd", "Spring Awakening", "Phantom of the Opera", "Something Rotten", "Jersey Boys", "The Band's Visit", "Guys and Dolls"]
 var computerSelection;
-// total letters guessed so far 
 var lettersGuessed;
-//wrong guesses are counted to know when player gets "Game Over"
 var wrongGuesses;
-// computer's choice written in blanks
 var selectionBlanks;
 var isGameOver;
-var song = document.getElementById("myAudio");
 
 
-// defining function for correct guesses to replace the blanks
+
+// replaces blanks with correct letter guess
 function fillInTheBlanks(guess) {
     for (var i = 0; i < selectionBlanks.length; i++) {
         if (guess == computerSelection[i].toLowerCase()) {
@@ -26,37 +24,39 @@ function fillInTheBlanks(guess) {
         }
     }
 }
-
+// renders HTML content
 function renderGame() {
-    //display game as text    
-    gameDiv3.textContent = "Wrong Guesses: " + wrongGuesses +"/8"
+    // display game as text    
+    gameDiv3.textContent = "Wrong Guesses: " + wrongGuesses + "/8"
     gameDiv2.textContent = "Letters Guessed so far: " + Object.keys(lettersGuessed).join(", ");
-
+    // display blanks with appropriate spacing
     var htmlTitle = ""
-    for (var i = 0; i < selectionBlanks.length; i++){
+    for (var i = 0; i < selectionBlanks.length; i++) {
         htmlTitle += "<span class='titleLetter'>" + selectionBlanks[i] + "</span>"
     }
-    
+
     gameDiv.innerHTML = htmlTitle;
 }
-
+// identify letters because I included shows that have spaces and punctuation. also don't want keys being accepted as guesses that are not letters
 function isLetter(character) {
     if (character.length > 1) {
         return false;
     }
     var regex = /[A-Za-z]/;
+    //character.search returns -1 if not found
     return character.search(regex) > -1;
 }
-
+// sets/resets variables to initial value
 function gameSetUp() {
     lettersGuessed = {};
     wrongGuesses = 0;
     selectionBlanks = [];
     isGameOver = false;
-    //identify letters because I included shows that have spaces and punctuation
-    
-    //search the computer selection for letters; replace those regular characters with "_"
+   
+
+    // search the computer selection for letters; 
     computerSelection = computerChoices[Math.floor(Math.random() * computerChoices.length)]
+    // replace alpha characters with "_"
     for (var i = 0; i < computerSelection.length; i++) {
         if (isLetter(computerSelection[i])) {
             selectionBlanks.push("_ ");
@@ -70,7 +70,7 @@ function gameSetUp() {
     gameOverDiv.textContent = "";
     renderGame();
 }
-
+// check if player has won; if word is complete
 function isTitleComplete(selectionBlanks, computerSelection) {
     if (selectionBlanks === computerSelection) {
         console.log("immediately returns true");
@@ -85,7 +85,7 @@ function isTitleComplete(selectionBlanks, computerSelection) {
         return false;
 
     }
-
+    //checks if every letter has been guessed correctly
     for (var i = 0; i < selectionBlanks.length; i++) {
         if (selectionBlanks[i] !== computerSelection[i]) {
             console.log("letters are not the same at index " + i)
@@ -98,12 +98,14 @@ function isTitleComplete(selectionBlanks, computerSelection) {
 
 }
 
+// Game Over; play songs and give message
 function gameOver(playerWins) {
     isGameOver = true;
     if (playerWins == true) {
-        song.play();
+        songWin.play();
         renderPlayerWins();
     } else {
+        songLose.play();
         renderPlayerLoses();
     }
 }
@@ -113,10 +115,10 @@ function renderPlayerWins() {
 }
 
 function renderPlayerLoses() {
-    gameOverDiv.textContent = "YOU LOSE! The correct show title was: " + computerSelection + ". Press any key to play again."
+    gameOverDiv.textContent = "YOU LOSE! The correct show title was: \"" + computerSelection + "\". Press any key to play again."
 }
 
-
+//initial game set up after game is over
 gameSetUp();
 
 
@@ -130,14 +132,16 @@ console.log(selectionBlanks);
 
 //player presses button, guesses letter
 document.onkeyup = function (event) {
+  // if game is over, reset the game and exit the function  
     if (isGameOver == true) {
         gameSetUp();
         return
     }
 
+    // player guess should always be lower case
     var playerGuess = event.key.toLowerCase();
     console.log("Player Guessed", playerGuess)
-    if (isLetter(playerGuess) == false){
+    if (isLetter(playerGuess) == false) {
         return
     }
     //check if letter has already been guessed

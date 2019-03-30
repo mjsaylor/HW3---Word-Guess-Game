@@ -39,3 +39,8 @@ main {
     min-width: 12px;
     margin: 0 8px;
 }
+
+#game-over {
+    font-size: 40px;
+    margin-top: 40px;
+}
