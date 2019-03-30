@@ -2,6 +2,7 @@
 var gameTitle = document.getElementById("ComputerChoice");
 var gameDiv = document.getElementById("hangman");
 var gameDiv2 = document.getElementById("letters-Guessed");
+var gameDiv3 = document.getElementById("wrong-guesses")
 var gameOverDiv = document.getElementById("game-over");
 //computer chooses random Broadway show
 var computerChoices = ["Urinetown", "Wicked", "Once On This Island", "Aladdin", "Hair", "The Sound of Music", "Grease", "The Lion King", "Thoroughly Modern Millie", "Mamma Mia", "The Music Man", "Dreamgirls", "Fiddler on the Roof", "Ragtime", "Les Miserables", "Avenue Q", "A Chorus Line", "My Fair Lady", "The Producers", "Hairspray", "Oklahoma!", "Aida", "School of Rock", "Matilda", "Anything Goes", "Cabaret", "Annie", "The Book of Mormon", "Hamilton", "Big River", "Little Shop of Horrors", "Jesus Christ Superstar", "Into the Woods", "In the Heights", "Evita", "Miss Saigon", "Rent", "Sweeney Todd", "Spring Awakening", "Phantom of the Opera", "Something Rotten", "Jersey Boys", "The Band's Visit", "Guys and Dolls"]
@@ -13,6 +14,7 @@ var wrongGuesses;
 // computer's choice written in blanks
 var selectionBlanks;
 var isGameOver;
+var song = document.getElementById("myAudio");
 
 
 // defining function for correct guesses to replace the blanks
@@ -26,8 +28,9 @@ function fillInTheBlanks(guess) {
 
 function renderGame() {
     //display game as text    
-    gameDiv2.textContent = "Letters Guessed so far: " + Object.keys(lettersGuessed) + " Wrong Guesses: " + wrongGuesses;
-    gameTitle.textContent = "Computer Choice: ???";
+    gameDiv3.textContent = "Wrong Guesses: " + wrongGuesses +"/8"
+    gameDiv2.textContent = "Letters Guessed so far: " + Object.keys(lettersGuessed);
+    gameTitle.textContent = "Another Openin' of Another Show...";
     gameDiv.textContent = selectionBlanks.join("");
 }
 
@@ -92,6 +95,7 @@ function isTitleComplete(selectionBlanks, computerSelection) {
 function gameOver(playerWins) {
     isGameOver = true;
     if (playerWins == true) {
+        song.play();
         renderPlayerWins();
     } else {
         renderPlayerLoses();
@@ -168,19 +172,3 @@ document.onkeyup = function (event) {
     renderGame();
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-//when word is complete
-//player wins
-//computer selects new word

@@ -4,15 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman</title>
-    
+    <link rel="stylesheet" type="text/css" href="../HW3---Word-Guess-Game/assets/css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate|Fascinate+Inline|Fira+Sans|Limelight"
+        rel="stylesheet">
+    <!-- 
+font-family: 'Fascinate Inline', cursive;
+font-family: 'Limelight', cursive;
+font-family: 'Fascinate', cursive;
+font-family: 'Fira Sans', sans-serif; -->
+
+
+
 </head>
 
 <body>
-    <h1 id="ComputerChoice"></h1>
-    <div id="hangman"></div>
-    <div id="letters-Guessed"></div>
-    <div id="game-over"></div>
-    
+    <audio id="myAudio">
+        <source src="assets/songs/urinetown-sample.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <main>
+        <h1 id="ComputerChoice"></h1>
+        <div id="hangman" class="words"></div>
+        <br>
+        <div id="letters-Guessed" class="words"></div>
+        <br>
+        <div id="wrong-guesses" class="words"></div>
+        <br>
+        <div id="game-over" class="words"></div>
+
+    </main>
+
     <script src="assets/javascript/game.js"></script>
 </body>
 
