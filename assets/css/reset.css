@@ -12,11 +12,13 @@ h1 {
     margin-right: auto;
     color: white;
     font-family: 'Fascinate Inline', cursive;
+    font-size: 44px;
 }
 
 .words {
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Roboto Slab', serif;
     color: white;
+    letter-spacing: 1px;
 }
 
 main {
@@ -25,6 +27,15 @@ main {
     margin: 200px auto;
 }
 
-#hangman {
+#how-to-play {
+    font-size: 18px;
+}
+#blanks{
+    font-family: 'Limelight', cursive;
     font-size: 36px;
+}
+
+.titleLetter {
+    min-width: 12px;
+    margin: 0 8px;
 }
